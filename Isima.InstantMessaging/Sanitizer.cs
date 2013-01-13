@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace Isima.InstantMessaging
 {
-    class Sanitizer
+    public class Sanitizer
     {
 
         /// <summary>
@@ -16,9 +16,9 @@ namespace Isima.InstantMessaging
         /// <returns>Retourne le texte avec un underscore devant l'url.</returns>
         public String NeutralizeUrl(String txt)
         {
-            String pattern = @"\b((http|https|ftp|file):\/\/";
+            String pattern = @"\b((http|https|ftp|file):\/\/)";
 
-            return Regex.Replace(txt,pattern,"_{1}");
+            return Regex.Replace(txt,pattern,"_$1");
         }
 
 
@@ -29,7 +29,7 @@ namespace Isima.InstantMessaging
         /// <returns>Le texte nettoyé.</returns>
         public String Sanitize(String txt)
         {
-            String pattern = @"[^\w\d]";
+            String pattern = @"[^\w\d] | \ ";
 
             return Regex.Replace(txt,pattern,String.Empty);
         }
