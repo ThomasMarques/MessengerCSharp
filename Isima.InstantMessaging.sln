@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Isima.InstantMessaging.Cons
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Isima.InstantMessaging.UnitTest", "Isima.InstantMessaging.UnitTest\Isima.InstantMessaging.UnitTest.csproj", "{160CF82A-BA8A-4535-97C4-BE02900CDAEE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Isima.InstantMessaging.WindowsClient", "Isima.InstantMessaging.WindowsClient\Isima.InstantMessaging.WindowsClient.csproj", "{7EAD85C4-41B5-4DF0-8812-B2EA2B15C465}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,16 @@ Global
 		{160CF82A-BA8A-4535-97C4-BE02900CDAEE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{160CF82A-BA8A-4535-97C4-BE02900CDAEE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{160CF82A-BA8A-4535-97C4-BE02900CDAEE}.Release|x86.ActiveCfg = Release|Any CPU
+		{7EAD85C4-41B5-4DF0-8812-B2EA2B15C465}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{7EAD85C4-41B5-4DF0-8812-B2EA2B15C465}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{7EAD85C4-41B5-4DF0-8812-B2EA2B15C465}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{7EAD85C4-41B5-4DF0-8812-B2EA2B15C465}.Debug|x86.ActiveCfg = Debug|x86
+		{7EAD85C4-41B5-4DF0-8812-B2EA2B15C465}.Debug|x86.Build.0 = Debug|x86
+		{7EAD85C4-41B5-4DF0-8812-B2EA2B15C465}.Release|Any CPU.ActiveCfg = Release|x86
+		{7EAD85C4-41B5-4DF0-8812-B2EA2B15C465}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{7EAD85C4-41B5-4DF0-8812-B2EA2B15C465}.Release|Mixed Platforms.Build.0 = Release|x86
+		{7EAD85C4-41B5-4DF0-8812-B2EA2B15C465}.Release|x86.ActiveCfg = Release|x86
+		{7EAD85C4-41B5-4DF0-8812-B2EA2B15C465}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

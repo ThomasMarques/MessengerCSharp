@@ -40,10 +40,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base64Encoder.cs" />
+    <Compile Include="Contacts\ContactsDataSet.cs">
+      <DependentUpon>ContactsDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Contacts\ContactsDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContactsDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Contacts\IContactManager.cs" />
+    <Compile Include="Contacts\Xml\XmlContactManager.cs" />
+    <Compile Include="Messaging\Message.cs" />
+    <Compile Include="Messaging\MessageEventArgs.cs" />
+    <Compile Include="Messaging\SessionController.cs" />
+    <Compile Include="Text\Base64Encoder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sanitizer.cs" />
+    <Compile Include="Text\Sanitizer.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Contacts\ContactsDataSet.xsc">
+      <DependentUpon>ContactsDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Contacts\ContactsDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ContactsDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Contacts\ContactsDataSet.xss">
+      <DependentUpon>ContactsDataSet.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
