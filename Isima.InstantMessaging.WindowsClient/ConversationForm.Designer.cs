@@ -30,9 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConversationForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.richTextConv = new System.Windows.Forms.RichTextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.sendText = new System.Windows.Forms.TextBox();
-            this.richTextConv = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -58,6 +58,18 @@
             this.splitContainer1.SplitterDistance = 191;
             this.splitContainer1.TabIndex = 0;
             // 
+            // richTextConv
+            // 
+            this.richTextConv.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.richTextConv.BackColor = System.Drawing.SystemColors.Control;
+            this.richTextConv.Enabled = false;
+            this.richTextConv.Location = new System.Drawing.Point(4, 3);
+            this.richTextConv.Name = "richTextConv";
+            this.richTextConv.ReadOnly = true;
+            this.richTextConv.Size = new System.Drawing.Size(277, 193);
+            this.richTextConv.TabIndex = 0;
+            this.richTextConv.Text = "";
+            // 
             // button1
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -79,23 +91,13 @@
             this.sendText.Size = new System.Drawing.Size(214, 61);
             this.sendText.TabIndex = 0;
             // 
-            // richTextConv
-            // 
-            this.richTextConv.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.richTextConv.BackColor = System.Drawing.SystemColors.Control;
-            this.richTextConv.Location = new System.Drawing.Point(4, 3);
-            this.richTextConv.Name = "richTextConv";
-            this.richTextConv.ReadOnly = true;
-            this.richTextConv.Size = new System.Drawing.Size(277, 193);
-            this.richTextConv.TabIndex = 0;
-            this.richTextConv.Text = "";
-            // 
             // ConversationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
             this.Controls.Add(this.splitContainer1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ConversationForm";
             this.Text = "ConversationForm";
             this.splitContainer1.Panel1.ResumeLayout(false);

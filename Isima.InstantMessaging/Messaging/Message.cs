@@ -7,45 +7,73 @@ namespace Isima.InstantMessaging.Messaging
 {
     public class Message
     {
+        /// <summary>
+        /// Addresse de l'expéditeur.
+        /// </summary>
         private String _senderAdress;
-        private Base64Encoder _base64;
-        private Sanitizer _sani;
 
+        /// <summary>
+        /// <see cref="_senderAdress"/>
+        /// </summary>
         public String SenderAdress
         {
             get { return _senderAdress; }
             set { _senderAdress = value; }
         }
+
+        /// <summary>
+        /// Addresse du destinataire.
+        /// </summary>
         private String _receiverAdress;
 
+        /// <summary>
+        /// <see cref="_receiverAdress"/>
+        /// </summary>
         public String ReceiverAdress
         {
             get { return _receiverAdress; }
             set { _receiverAdress = value; }
         }
+
+        /// <summary>
+        /// Date et heure de l'envoi.
+        /// </summary>
         private DateTime _instant;
 
+        /// <summary>
+        /// <see cref="_instant"/>
+        /// </summary>
         public DateTime Instant
         {
             get { return _instant; }
             set { _instant = value; }
         }
+
+        /// <summary>
+        /// Contenu du message.
+        /// </summary>
         private String _content;
 
+        /// <summary>
+        /// <see cref="_content"/>
+        /// </summary>
         public String Content
         {
             get { return _content; }
             set { _content = value; }
         }
 
-        public Message(String senderAddress, String rec, String cont)
+        /// <summary>
+        /// Permet de construire un message.
+        /// </summary>
+        /// <param name="senderAddress">Addresse de l'expéditeur.</param>
+        /// <param name="recAdress">Addresse du destinataire.</param>
+        /// <param name="contenu">Contenue du messae</param>
+        public Message(String senderAddress, String recAdress, String contenu)
         {
-            _sani = new Sanitizer();
-            _base64 = new Base64Encoder();
-
             _senderAdress = senderAddress;
-            _receiverAdress = rec;
-            _content = _sani.Sanitize(_sani.NeutralizeUrl(cont));
+            _receiverAdress = recAdress;
+            _content = contenu;
             _instant = DateTime.Now;
         }
     }

@@ -11,24 +11,29 @@ namespace Isima.InstantMessaging.WindowsClient
 {
     public partial class AddContact : Form
     {
+        /// <summary>
+        /// Constructeur de la fenetre.
+        /// </summary>
         public AddContact()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void textChanged(object sender, EventArgs e)
         {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
+            if (Name_Text_Box.Text.Length == 0 || Address_Text_Box.Text.Length == 0)
+            {
+                button1.Enabled = false;
+            }
+            else
+            {
+                button1.Enabled = true;
+            }
         }
 
         private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
         {
-
+            
         }
     }
 }

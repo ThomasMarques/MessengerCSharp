@@ -67,6 +67,7 @@
             this.Name_Text_Box.Name = "Name_Text_Box";
             this.Name_Text_Box.Size = new System.Drawing.Size(227, 20);
             this.Name_Text_Box.TabIndex = 4;
+            this.Name_Text_Box.TextChanged += new System.EventHandler(this.textChanged);
             // 
             // tableLayoutPanel2
             // 
@@ -93,19 +94,18 @@
             this.button2.TabIndex = 1;
             this.button2.Text = "Cancel";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(21, 6);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
             this.button1.Text = "OK";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
             // 
@@ -134,6 +134,7 @@
             this.Address_Text_Box.Name = "Address_Text_Box";
             this.Address_Text_Box.Size = new System.Drawing.Size(227, 20);
             this.Address_Text_Box.TabIndex = 3;
+            this.Address_Text_Box.TextChanged += new System.EventHandler(this.textChanged);
             // 
             // AddContact
             // 

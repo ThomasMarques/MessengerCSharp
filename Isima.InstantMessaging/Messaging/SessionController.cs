@@ -11,24 +11,55 @@ namespace Isima.InstantMessaging.Messaging
 
     public class SessionController
     {
-        private event EventHandler _sendMessageEvent;
+        /// <summary>
+        /// Addresse mail de l'utilisateur.
+        /// </summary>
+        public static readonly String MY_NAME = "monAdresse@gmail.com";
 
-        public event EventHandler MessageReceived;
+        /// <summary>
+        /// Evenement envoyé lors pour envoyé un message.
+        /// </summary>
+        public event EventHandler<MessageEventArgs> _sendMessageEvent;
 
+        /// <summary>
+        /// Instance unique de la classe. (Singleton)
+        /// </summary>
+        private static SessionController _instance;
 
-        public SessionController()
+        /// <summary>
+        /// Constructeur privé. (Singleton)
+        /// </summary>
+        private SessionController()
         {
             
         }
+
+        /// <summary>
+        /// Permet de récupérer une instance de la classe et de la créer si besoin. (Singleton)
+        /// </summary>
+        /// <returns>Une instance de la classe</returns>
+        public static SessionController GetInstance()
+        {
+            if (_instance == null)
+                _instance = new SessionController();
+            return _instance;
+        }
         
+        /// <summary>
+        /// Permet d'initialiser une conversation.
+        /// </summary>
         public void initialize()
         {
-            Thread.Sleep(10);
+            Thread.Sleep(10000);
         }
 
+        /// <summary>
+        /// Permet d'envoyer un message.
+        /// </summary>
+        /// <param name="mess">Le message à envoyer.</param>
         public void send(Message mess)
         {
-            Thread.Sleep(5);
+            Thread.Sleep(5000);
             String tmp = mess.ReceiverAdress;
 
             mess.ReceiverAdress = mess.SenderAdress;
@@ -37,7 +68,9 @@ namespace Isima.InstantMessaging.Messaging
 
             MessageEventArgs mea = new MessageEventArgs();
             mea.Mess = mess;
-            //_sendMessageEvent(this, mea);
+
+            if(_sendMessageEvent != null)
+                _sendMessageEvent(this, mea);
         }
     }
 }

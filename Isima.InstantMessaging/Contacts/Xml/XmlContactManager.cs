@@ -10,8 +10,10 @@ namespace Isima.InstantMessaging.Contacts.Xml
 {
     public class XmlContactManager : IContactManager
     {
-        
-
+        /// <summary>
+        /// Fonction permettant de charger le fichier Xml.
+        /// </summary>
+        /// <returns>Le ContactDataSet construit par le fichier Xml</returns>
         public ContactDataSet Load()
         {
             ContactDataSet contacts = null;
@@ -32,7 +34,10 @@ namespace Isima.InstantMessaging.Contacts.Xml
             return contacts;
         }
 
-
+        /// <summary>
+        /// Fonction permettant la sauvegarde du ContactDataSet au format Xml.
+        /// </summary>
+        /// <param name="contacts">Le ContactDataSet à sauvegarder</param>
         public void Save(ContactDataSet contacts)
         {
             XmlSerializer xml = new XmlSerializer(typeof(ContactDataSet));
