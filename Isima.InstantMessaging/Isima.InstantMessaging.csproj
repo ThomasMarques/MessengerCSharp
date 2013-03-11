@@ -45,6 +45,7 @@
     <Compile Include="Contacts\Xml\XmlContactsManager.cs" />
     <Compile Include="Messaging\Message.cs" />
     <Compile Include="Messaging\MessageEventArgs.cs" />
+    <Compile Include="Messaging\Session.cs" />
     <Compile Include="Messaging\SessionController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session\ISessionManager.cs" />

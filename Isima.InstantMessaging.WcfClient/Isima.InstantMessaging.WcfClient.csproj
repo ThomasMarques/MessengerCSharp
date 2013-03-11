@@ -48,6 +48,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\SessionServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="WcfContactsManager.cs" />
     <Compile Include="WcfSessionManager.cs" />
   </ItemGroup>
@@ -69,9 +74,23 @@
     <None Include="Service References\ContactServiceReference\Isima.InstantMessaging.WcfClient.ContactServiceReference.Contact.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\SessionServiceReference\Isima.InstantMessaging.WcfClient.SessionServiceReference.Session.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SessionServiceReference\SessionService.wsdl" />
+    <None Include="Service References\SessionServiceReference\SessionService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SessionServiceReference\SessionService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SessionServiceReference\SessionService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ContactServiceReference\" />
+    <WCFMetadataStorage Include="Service References\SessionServiceReference\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\ContactServiceReference\ContactService.disco" />
@@ -93,6 +112,21 @@
       <Project>{79EB991C-3192-459C-978D-DB3ED42CF278}</Project>
       <Name>Isima.InstantMessaging</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SessionServiceReference\SessionService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SessionServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SessionServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SessionServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

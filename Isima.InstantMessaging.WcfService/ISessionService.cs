@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using Isima.InstantMessaging.Messaging;
 
 namespace Isima.InstantMessaging.WcfService
 {
@@ -12,9 +13,12 @@ namespace Isima.InstantMessaging.WcfService
     public interface ISessionService
     {
         [OperationContract]
+        bool SendMessage(Message message);
+
+        [OperationContract]
         Session Register(DateTime current);
 
         [OperationContract]
-        bool GetPresence(String windowsIdentityName)
+        bool GetPresence(String windowsIdentityName);
     }
 }

@@ -12,7 +12,7 @@ namespace Isima.InstantMessaging.WcfService
     public class SessionService : ISessionService
     {
 
-        private static const TimeSpan expirationSpan = new TimeSpan(0, 1, 0);
+        private static TimeSpan expirationSpan = new TimeSpan(0, 1, 0);
 
         private IList<Session> _sessions = new List<Session>();
 
@@ -38,6 +38,13 @@ namespace Isima.InstantMessaging.WcfService
             Session s = new Session();
             s.WindowsIdentityName = windowsIdentityName;
             return _sessions.Contains(s);
+        }
+
+        public bool SendMessage(Message message)
+        {
+            bool ret = GetPresence(message.SenderAddress);
+            //TO DO
+            return ret;
         }
     }
 }

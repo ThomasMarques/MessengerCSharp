@@ -12,8 +12,14 @@ namespace Isima.InstantMessaging.WcfClient
         public void Send(Message message)
         {
             //identique avec session au lieu de contact
-            using (ContactServiceReference.ContactServiceClient client = new ContactServiceReference.ContactServiceClient())
+            using (SessionServiceReference.SessionServiceClient service = new SessionServiceReference.SessionServiceClient())
             {
+                SessionServiceReference.Message mess = new SessionServiceReference.Message();
+                mess.ReceiverAddress = message.ReceiverAddress;
+                mess.SenderAddress = message.SenderAddress;
+                mess.Content = message.Content;
+                mess.Instant = message.Instant;
+                service.SendMessage(mess);
 
             }
         }
