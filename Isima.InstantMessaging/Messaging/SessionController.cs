@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Isima.InstantMessaging.ServiceSession;
 
 namespace Isima.InstantMessaging.Messaging
 {
@@ -9,14 +10,13 @@ namespace Isima.InstantMessaging.Messaging
     {
         public event EventHandler<MessageEventArgs> MessageReceived;
 
-        private Session _session;
+        private Session _session = null;
 
-        private ISessionService _service;
+        private ServiceSession.SessionServiceClient _service = new ServiceSession.SessionServiceClient();
 
         public void Initialize()
         {
-            ServiceAgenda.ServiceAgendaClient service = new ServiceAgenda.ServiceAgendaClient();
-            string result = service.GetData(5);
+            
         }
 
         public void Send(Message message)

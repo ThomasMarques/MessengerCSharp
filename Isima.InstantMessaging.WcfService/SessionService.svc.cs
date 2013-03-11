@@ -16,9 +16,12 @@ namespace Isima.InstantMessaging.WcfService
 
         private IList<Session> _sessions = new List<Session>();
 
-        public Session Register(DateTime current)
+        public Session Register()
         {
             String name = "public";
+
+            // On récupère la date du client
+            DateTime current = DateTime.Now;
 
             if (!OperationContext.Current.ServiceSecurityContext.IsAnonymous)
                 name = Text.Sanitizer.SanitizeFileName(OperationContext.Current.ServiceSecurityContext.WindowsIdentity.Name);
@@ -33,11 +36,68 @@ namespace Isima.InstantMessaging.WcfService
             return session;
         }
 
-        public bool GetPresence(String windowsIdentityName)
+        public Session Register(System.Guid identifiant)
         {
-            Session s = new Session();
-            s.WindowsIdentityName = windowsIdentityName;
-            return _sessions.Contains(s);
+            String name = "public";
+            Session ret = null;
+
+            if (!OperationContext.Current.ServiceSecurityContext.IsAnonymous)
+                name = Text.Sanitizer.SanitizeFileName(OperationContext.Current.ServiceSecurityContext.WindowsIdentity.Name);
+
+            // On récupère la date du client
+            DateTime current = DateTime.Now;
+
+            Session session = new Session();
+            session.Identifiant = identifiant;
+
+            int index = _sessions.IndexOf(session);
+
+            if (index != -1)
+            {
+                ret = _sessions.ElementAt(index);
+                if(ret.WindowsIdentityName.Equals(name))
+                {
+                    ret.Expiration = current + expirationSpan;
+                }
+                else
+                {
+                    ret = null;
+                }
+            }
+
+            return ret;
+        }
+
+        public Etat GetPresence(String windowsIdentityName)
+        {
+            foreach (Session s in _sessions)
+            {
+                if (s.WindowsIdentityName.Equals(windowsIdentityName))
+                {
+                    return s.CurrentEtat;
+                }
+            }
+
+            return Etat.Offligne;
+        }
+
+        public Session setEtat(Etat etat)
+        {
+            String name = "public";
+
+            if (!OperationContext.Current.ServiceSecurityContext.IsAnonymous)
+                name = Text.Sanitizer.SanitizeFileName(OperationContext.Current.ServiceSecurityContext.WindowsIdentity.Name);
+
+            foreach (Session s in _sessions)
+            {
+                if(s.WindowsIdentityName.Equals(name))
+                {
+                    s.CurrentEtat = etat;
+                    return s;
+                }
+            }
+
+            return null;
         }
     }
 }

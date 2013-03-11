@@ -6,9 +6,18 @@ using System.Runtime.Serialization;
 
 namespace Isima.InstantMessaging.WcfService
 {
-    [DataContract]
-    public class Session
+    public enum Etat
     {
+        Available,
+        Buzy,
+        Absent,
+        Offligne
+    };
+
+    [DataContract]
+    public class Session : IComparable 
+    {
+
         [DataMember]
         public System.Guid Identifiant { get; set; }
 
@@ -18,7 +27,11 @@ namespace Isima.InstantMessaging.WcfService
         [DataMember]
         public String WindowsIdentityName { get; set; }
 
-        public bool Equals(Object o)
+        [DataMember]
+        public Etat CurrentEtat { get; set; }
+
+
+        public override bool Equals(Object o)
         {
             bool ret = false;
             if (o.GetType().Equals(this.GetType()))
