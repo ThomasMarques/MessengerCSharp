@@ -9,10 +9,14 @@ namespace Isima.InstantMessaging.Messaging
     {
         public event EventHandler<MessageEventArgs> MessageReceived;
 
+        private Session _session;
+
+        private ISessionService _service;
+
         public void Initialize()
         {
-            // Simulate the initialization of a session by waiting 5 seconds.
-            System.Threading.Thread.Sleep(10000);
+            ServiceAgenda.ServiceAgendaClient service = new ServiceAgenda.ServiceAgendaClient();
+            string result = service.GetData(5);
         }
 
         public void Send(Message message)
