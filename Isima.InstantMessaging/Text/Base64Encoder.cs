@@ -3,45 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Isima.InstantMessaging
+namespace Isima.InstantMessaging.Text
 {
     public class Base64Encoder
     {
-
-        /// <summary>
-        /// Permets d'encoder un texte passé en paramètre.
-        /// </summary>
-        /// <param name="txt">Texte à encoder.</param>
-        /// <returns>retourne le texte codé en base 64.</returns>
-        public String Encode(String txt)
+        static public string Encode(string input)
         {
-            if(txt == null)
-                throw new ArgumentNullException();
-
-            System.Text.UTF8Encoding encoding=new System.Text.UTF8Encoding();
-            return System.Convert.ToBase64String(encoding.GetBytes(txt));
+            return System.Convert.ToBase64String(System.Text.UTF8Encoding.UTF8.GetBytes(input));
         }
 
-        /// <summary>
-        /// Permets d'encoder un texte passé en paramètre.
-        /// </summary>
-        /// <param name="code">Texte encoder en base 64.</param>
-        /// <returns>retourne le texte décodé.</returns>
-        public String Decode(String code)
+        static public string Decode(string input)
         {
-            if (code == null)
-                throw new ArgumentNullException();
-
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            return System.Text.ASCIIEncoding.ASCII.GetString(System.Convert.FromBase64String(code));
+            return System.Text.UTF8Encoding.UTF8.GetString(System.Convert.FromBase64String(input));
         }
-
-        /// <summary>
-        /// Constructeur de la classe.
-        /// </summary>
-        public Base64Encoder()
-        {
-        }
-
     }
 }

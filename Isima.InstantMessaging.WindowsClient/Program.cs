@@ -8,7 +8,7 @@ namespace Isima.InstantMessaging.WindowsClient
     static class Program
     {
         /// <summary>
-        /// Point d'entrée principal de l'application.
+        /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()

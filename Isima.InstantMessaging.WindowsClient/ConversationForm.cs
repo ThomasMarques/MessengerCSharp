@@ -7,131 +7,92 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Isima.InstantMessaging.Messaging;
+using Isima.InstantMessaging.Text;
 
 namespace Isima.InstantMessaging.WindowsClient
 {
     public partial class ConversationForm : Form
     {
-        /// <summary>
-        /// Addresse du destinataire.
-        /// </summary>
-        private String _receiver;
-        /// <summary>
-        /// Addresse de l'expéditeur.
-        /// </summary>
-        private String _sender;
-        
-        /// <summary>
-        /// Permet l'encodage d'un texte en base 64.
-        /// </summary>
-        private Base64Encoder _base64;
-        /// <summary>
-        /// Permet de nétoyer un texte.
-        /// </summary>
-        private Sanitizer _sani;
+        private string receiverAddress;
 
-        /// <summary>
-        /// Font gras utilisée pour afficher les addresses.
-        /// </summary>
-        private readonly static Font BOLD = new Font("Georgia", 9, FontStyle.Bold);
-        /// <summary>
-        /// Font italic utilisée pour afficher les contenus du messages.
-        /// </summary>
-        private readonly static Font ITALIC = new Font("Georgia", 8, FontStyle.Italic);
+        private static Font headerFont = new Font("Arial", 10, FontStyle.Bold);
+        private static Color headerColor = Color.DarkBlue;
+        private static Font messageFont = new Font("Arial", 10);
+        private static Color messageColor = Color.Blue; 
 
-        /// <summary>
-        /// Constructeur initialisant les différents attributs.
-        /// </summary>
-        /// <param name="sender">Addresse de l'expéditeur.</param>
-        /// <param name="receiver">Addresse du destinataire.</param>
-        public ConversationForm(String sender, String receiver)
+        public ConversationForm(string receiverAddress)
         {
+            MessagingContext.Current.MessagingSessionController.MessageReceived += new EventHandler<MessageEventArgs>(sessionController_MessageReceived);
+
             InitializeComponent();
 
-            _sani = new Sanitizer();
-            _base64 = new Base64Encoder();
-
-            SessionController.GetInstance()._sendMessageEvent += new EventHandler<MessageEventArgs>(this.MessageReceived);
-
-            _receiver = receiver;
-            _sender = sender;
-            this.Text = receiver;
-            this.sendText.KeyUp += new KeyEventHandler(this.sendText_KeyUp);
+            this.receiverAddress = receiverAddress;
         }
 
-        /// <summary>
-        /// Methode levé lors de la réception d'un message.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="message"></param>
-        public void MessageReceived(object sender, MessageEventArgs message)
+        private void ConversationForm_Load(object sender, EventArgs e)
         {
-            if (message.Mess.SenderAdress.Equals(_receiver))
+            this.Text = this.receiverAddress;
+            txtMessage.Focus();
+        }
+
+        void sessionController_MessageReceived(object sender, MessageEventArgs e)
+        {
+            if (e.MessageData.SenderAddress == this.receiverAddress)
             {
-
-                richTextConv.SelectionFont = BOLD;
-                richTextConv.SelectionColor = Color.DarkRed;
-                richTextConv.SelectedText += Environment.NewLine + _sender + "  [" + message.Mess.Instant.ToString("HH:mm") + "]";
-
-                richTextConv.SelectionFont = ITALIC;
-                richTextConv.SelectionColor = Color.Red;
-                richTextConv.SelectedText += Environment.NewLine + message.Mess.Content;
+                this.Invoke(new Action<Messaging.Message> (this.DisplayMessage), e.MessageData);
             }
         }
 
-        /// <summary>
-        /// Méthode levé lors du click sur le bouton d'envoi.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button1_Click_1(object sender, EventArgs e)
+        private void DisplayMessage(Messaging.Message message)
         {
-            send();
+            string header = string.Format("{0} [{1}]:\n", message.SenderAddress, message.Instant.ToShortTimeString());
+            string content = Sanitizer.Sanitize(Sanitizer.NeutralizeUrl(message.Content));
+
+            int headerStart = rtbConversation.TextLength;
+            rtbConversation.AppendText(header);
+            rtbConversation.Select(headerStart, header.Length);
+            rtbConversation.SelectionColor = headerColor;
+            rtbConversation.SelectionFont = headerFont;
+
+            int contentStart = rtbConversation.TextLength;
+            rtbConversation.AppendText(content);
+            rtbConversation.Select(contentStart, content.Length);
+            rtbConversation.SelectionColor = messageColor;
+            rtbConversation.SelectionFont = messageFont;
+
+            rtbConversation.AppendText("\n");
         }
 
-        /// <summary>
-        /// Méthode levé lorsqu'une touche est appuyé.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void sendText_KeyUp(object sender, KeyEventArgs e)
+        private void txtMessage_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyChar == '\r')
             {
-                send();
+                Messaging.Message message = new Messaging.Message()
+                {
+                    SenderAddress = MessagingContext.Current.SenderAddress,
+                    ReceiverAddress = receiverAddress,
+                    Instant = DateTime.Now,
+                    Content = Sanitizer.Sanitize(txtMessage.Text)
+                };
+                DisplayMessage(message);
+
+                txtMessage.Text = string.Empty;
+                txtMessage.Refresh();
+
+                while (bgwSender.IsBusy)
+                {
+                    Application.DoEvents();
+                }
+                bgwSender.RunWorkerAsync(message);
+
+                e.Handled = true;
             }
         }
 
-        /// <summary>
-        /// Permet l'envoi d'un message.
-        /// </summary>
-        private void send()
+        private void bgwSender_DoWork(object sender, DoWorkEventArgs e)
         {
-            this.Cursor = Cursors.WaitCursor;
-            button1.Enabled = false;
-            sendText.Enabled = false;
-
-            Messaging.Message mess = new Messaging.Message(_sender, _receiver, _sani.Sanitize(_sani.NeutralizeUrl(sendText.Text)));
-
-            if (richTextConv.Text.Length > 0)
-                richTextConv.SelectedText += Environment.NewLine;
-
-            richTextConv.SelectionFont = BOLD;
-            richTextConv.SelectionColor = Color.DarkBlue;
-            richTextConv.SelectedText += _sender + "  [" + mess.Instant.ToString("HH:mm") + "]";
-
-            richTextConv.SelectionFont = ITALIC;
-            richTextConv.SelectionColor = Color.Blue;
-            richTextConv.SelectedText += Environment.NewLine + mess.Content;
-
-            sendText.Clear();
-            sendText.Enabled = true;
-            button1.Enabled = true;
-            this.Cursor = Cursors.Arrow;
-
-            Update();
-
-            SessionController.GetInstance().send(mess);
+            if (e.Argument is Messaging.Message)
+                MessagingContext.Current.MessagingSessionController.Send(((Messaging.Message)e.Argument));
         }
     }
 }

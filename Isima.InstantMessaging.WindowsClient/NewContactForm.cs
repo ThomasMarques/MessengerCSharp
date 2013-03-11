@@ -9,31 +9,21 @@ using System.Windows.Forms;
 
 namespace Isima.InstantMessaging.WindowsClient
 {
-    public partial class AddContact : Form
+    public partial class NewContactForm : Form
     {
-        /// <summary>
-        /// Constructeur de la fenetre.
-        /// </summary>
-        public AddContact()
+        public NewContactForm()
         {
             InitializeComponent();
         }
 
-        public void textChanged(object sender, EventArgs e)
+        public string Address
         {
-            if (Name_Text_Box.Text.Length == 0 || Address_Text_Box.Text.Length == 0)
-            {
-                button1.Enabled = false;
-            }
-            else
-            {
-                button1.Enabled = true;
-            }
+            get { return textBox1.Text; }
         }
 
-        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        public string DisplayName
         {
-            
+            get { return textBox2.Text; }
         }
     }
 }

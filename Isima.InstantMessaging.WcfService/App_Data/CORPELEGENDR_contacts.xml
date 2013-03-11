@@ -1,0 +1,7 @@
+<?xml version="1.0" standalone="yes"?>
+<ContactsDataSet xmlns="http://tempuri.org/ContactsDataSet.xsd">
+  <Contacts>
+    <Address>eric.legendre@isima.fr</Address>
+    <DisplayName>Eric</DisplayName>
+  </Contacts>
+</ContactsDataSet>

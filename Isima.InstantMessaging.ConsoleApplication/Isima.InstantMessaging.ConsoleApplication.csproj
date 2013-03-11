@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{15EC618D-AD47-4F87-9C9E-35E62E8B4C52}</ProjectGuid>
+    <ProjectGuid>{062B0BE0-E65F-4516-8176-15736509D432}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Isima.InstantMessaging.ConsoleApplication</RootNamespace>
@@ -43,12 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InvalidArgumentSyntaxException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnknownArgumentException.cs" />
+    <Compile Include="ValidArguments.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Isima.InstantMessaging\Isima.InstantMessaging.csproj">
-      <Project>{7eecdeda-bd3c-4630-bd7d-5dbe12703845}</Project>
+      <Project>{79EB991C-3192-459C-978D-DB3ED42CF278}</Project>
       <Name>Isima.InstantMessaging</Name>
     </ProjectReference>
   </ItemGroup>

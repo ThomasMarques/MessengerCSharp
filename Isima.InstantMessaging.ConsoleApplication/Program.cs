@@ -2,74 +2,83 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Isima.InstantMessaging.Text;
 
 namespace Isima.InstantMessaging.ConsoleApplication
 {
     class Program
     {
-        /// <summary>
-        /// Permet d'analyser les arguments d'envoi du message.
-        /// </summary>
-        /// <param name="from">Expéditeur du message.</param>
-        /// <param name="to">Destinataire du message.</param>
-        public void AnalyseArgument(String[] args)
+        static void Main(string[] args)
         {
-            if(args.Length != 3)
-                throw new ArgumentException();
+            const string Usage = "\nUsage: Isima.InstantMessaging.ConsoleApplication from:<sender address> to:<receiver address>";
 
-            if (!args[2].Contains("to:") || !args[1].Contains("from:"))
-                throw new ArgumentException();
+            if (args.Length < 2)
+            {
+                Console.Error.WriteLine(Usage);
+            }
+            else
+            {
+                try
+                {
+                    foreach (string arg in args)
+                        AnalyzeArgument(arg);
 
-            String emetteur = args[1].Substring(5);
-            String dest = args[2].Substring(3);
-            Console.WriteLine("From is " + emetteur );
-            Console.WriteLine("To is " +  dest);
-            Console.WriteLine();
+                    RunConsole();
+                }
+                catch (UnknownArgumentException uns)
+                {
+                    Console.Error.WriteLine();
+                    Console.Error.WriteLine(uns.Message);
+                    Console.Error.WriteLine(Usage);
+                }
+                catch (InvalidArgumentSyntaxException unk)
+                {
+                    Console.Error.WriteLine();
+                    Console.Error.WriteLine(unk.Message);
+                    Console.Error.WriteLine(Usage);
+                }
+            }
         }
 
-
-        /// <summary>
-        /// Permet de tchatter avec un destinataire. Pour finir la convertion on tapera le mot BYE.
-        /// </summary>
-        public void RunConsole()
+        private static void RunConsole()
         {
-            String saisie;
-            Console.WriteLine("Conversation en cours :");
-            Sanitizer sanitizer = new Sanitizer();
-            Base64Encoder base64 = new Base64Encoder();
-
-            do
+            while (1 == 1)
             {
                 Console.Write("> ");
-                saisie = Console.ReadLine();
-                saisie = sanitizer.Sanitize(saisie);
-                Console.WriteLine("Sanitized text : " + saisie);
-                saisie = base64.Encode(saisie);
-                Console.WriteLine("Encoded text : " + saisie);
-                saisie = base64.Decode(saisie);
-                Console.WriteLine("Decoded text : " + saisie);
+                string input = Console.ReadLine();
+                if (string.Compare(input, "BYE", false) == 0)
+                {
+                    break;
+                }
+                else
+                {
+                    string sanitizedText = Sanitizer.Sanitize(Sanitizer.NeutralizeUrl(input));
+                    Console.WriteLine("Sanitized text: {0}.", sanitizedText);
 
+                    string encodedText = Base64Encoder.Encode(sanitizedText);
+                    Console.WriteLine("Encoded text: {0}.", encodedText);
+
+                    string decodedText = Base64Encoder.Decode(encodedText);
+                    Console.WriteLine("Decoded text: {0}", decodedText);
+                }
             }
-            while (!saisie.Equals("BYE"));
-            Console.WriteLine("Fin de la conversation.");
         }
 
-
-
-        public static void Main(String[] args)
+        private static void AnalyzeArgument(string argument)
         {
-            Program program = new Program();
+            string[] elements = argument.Split(':', '=');
+            if (elements.Length != 2)
+                throw new InvalidArgumentSyntaxException(argument);
 
             try
             {
-                program.AnalyseArgument(args);
-                program.RunConsole();
+                ValidArguments arg = (ValidArguments)Enum.Parse(typeof(ValidArguments), elements[0], true);
+                Console.WriteLine("{0} is {1}", arg, elements[1]);
             }
             catch (ArgumentException)
             {
-                Console.WriteLine("Usage : Isima.InstantMessaging.Console from:<sender address> to:<receiver address> ");
+                throw new UnknownArgumentException(elements[0]);
             }
         }
-
     }
 }

@@ -2,75 +2,39 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
-
 
 namespace Isima.InstantMessaging.Messaging
 {
-
-
     public class SessionController
     {
-        /// <summary>
-        /// Addresse mail de l'utilisateur.
-        /// </summary>
-        public static readonly String MY_NAME = "monAdresse@gmail.com";
+        public event EventHandler<MessageEventArgs> MessageReceived;
 
-        /// <summary>
-        /// Evenement envoyé lors pour envoyé un message.
-        /// </summary>
-        public event EventHandler<MessageEventArgs> _sendMessageEvent;
-
-        /// <summary>
-        /// Instance unique de la classe. (Singleton)
-        /// </summary>
-        private static SessionController _instance;
-
-        /// <summary>
-        /// Constructeur privé. (Singleton)
-        /// </summary>
-        private SessionController()
+        public void Initialize()
         {
-            
+            // Simulate the initialization of a session by waiting 5 seconds.
+            System.Threading.Thread.Sleep(10000);
         }
 
-        /// <summary>
-        /// Permet de récupérer une instance de la classe et de la créer si besoin. (Singleton)
-        /// </summary>
-        /// <returns>Une instance de la classe</returns>
-        public static SessionController GetInstance()
+        public void Send(Message message)
         {
-            if (_instance == null)
-                _instance = new SessionController();
-            return _instance;
-        }
-        
-        /// <summary>
-        /// Permet d'initialiser une conversation.
-        /// </summary>
-        public void initialize()
-        {
-            Thread.Sleep(10000);
+            // Simulate a conference by waiting 5 seconds prior to sending a response
+            System.Threading.Thread.Sleep(5000);
+            Message echo = new Message()
+            {
+                SenderAddress = message.ReceiverAddress,
+                ReceiverAddress = message.SenderAddress,
+                Content = string.Concat("Echo: ", message.Content),
+                Instant = DateTime.Now
+            };
+            OnMessageReceived(echo);
         }
 
-        /// <summary>
-        /// Permet d'envoyer un message.
-        /// </summary>
-        /// <param name="mess">Le message à envoyer.</param>
-        public void send(Message mess)
+        private void OnMessageReceived(Message messageData)
         {
-            Thread.Sleep(5000);
-            String tmp = mess.ReceiverAdress;
-
-            mess.ReceiverAdress = mess.SenderAdress;
-            mess.SenderAdress = tmp;
-            mess.Content = "Echo : " + mess.Content;
-
-            MessageEventArgs mea = new MessageEventArgs();
-            mea.Mess = mess;
-
-            if(_sendMessageEvent != null)
-                _sendMessageEvent(this, mea);
+            if (MessageReceived != null)
+            {
+                MessageReceived(this, new MessageEventArgs(messageData));
+            }
         }
     }
 }

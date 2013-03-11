@@ -4,42 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Isima.InstantMessaging
+namespace Isima.InstantMessaging.Text
 {
     public class Sanitizer
     {
-
-        /// <summary>
-        /// Fonction permettant de neutraliser les url dans un texte.
-        /// </summary>
-        /// <param name="txt">Texte à neutraliser.</param>
-        /// <returns>Retourne le texte avec un underscore devant l'url.</returns>
-        public String NeutralizeUrl(String txt)
+        static public string Sanitize(string input)
         {
-            String pattern = @"\b((http|https|ftp|file):\/\/)";
-
-            return Regex.Replace(txt,pattern,"_$1");
+            const string pattern = @"[^\w\d\p{Z}\p{P}]";
+            return Regex.Replace(input, pattern, string.Empty);
         }
 
-
-        /// <summary>
-        /// Permet de nettoyer un texte.
-        /// </summary>
-        /// <param name="txt">texte à clean.</param>
-        /// <returns>Le texte nettoyé.</returns>
-        public String Sanitize(String txt)
+        static public string NeutralizeUrl(string input)
         {
-            String pattern = @"[^\w\d] | \ ";
-
-            return Regex.Replace(txt,pattern,String.Empty);
+            const string pattern = @"\b(?<Protocol>(http|ftp|https|file):\/\/)";
+            return Regex.Replace(input, pattern, "_${Protocol}");
         }
 
-        /// <summary>
-        /// Constructeur de la classe.
-        /// </summary>
-        public Sanitizer()
+        static public string SanitizeFileName(string input)
         {
+            const string pattern = @"[^\w\d]";
+            return Regex.Replace(input, pattern, string.Empty);
         }
-
     }
 }

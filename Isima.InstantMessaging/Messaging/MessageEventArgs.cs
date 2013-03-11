@@ -7,18 +7,11 @@ namespace Isima.InstantMessaging.Messaging
 {
     public class MessageEventArgs : EventArgs
     {
-        /// <summary>
-        /// Message à envoyer.
-        /// </summary>
-        private Message _mess;
-
-        /// <summary>
-        /// <see cref="_mess"/>
-        /// </summary>
-        public Message Mess
+        public MessageEventArgs(Message messageData)
         {
-            get { return _mess; }
-            set { _mess = value; }
+            this.MessageData = messageData;
         }
+
+        public Message MessageData { get; set; }
     }
 }
