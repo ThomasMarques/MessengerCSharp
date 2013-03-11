@@ -49,6 +49,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="WcfContactsManager.cs" />
+    <Compile Include="WcfSessionManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

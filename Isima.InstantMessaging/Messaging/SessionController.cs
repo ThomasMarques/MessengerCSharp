@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Isima.InstantMessaging.Session;
 
 namespace Isima.InstantMessaging.Messaging
 {
@@ -9,8 +10,11 @@ namespace Isima.InstantMessaging.Messaging
     {
         public event EventHandler<MessageEventArgs> MessageReceived;
 
-        public void Initialize()
+        private ISessionManager currentSessionManager;
+
+        public void Initialize(ISessionManager curentSessM)
         {
+            currentSessionManager = curentSessM;
             // Simulate the initialization of a session by waiting 5 seconds.
             System.Threading.Thread.Sleep(10000);
         }
@@ -18,7 +22,7 @@ namespace Isima.InstantMessaging.Messaging
         public void Send(Message message)
         {
             // Simulate a conference by waiting 5 seconds prior to sending a response
-            System.Threading.Thread.Sleep(5000);
+            /*System.Threading.Thread.Sleep(5000);
             Message echo = new Message()
             {
                 SenderAddress = message.ReceiverAddress,
@@ -26,7 +30,11 @@ namespace Isima.InstantMessaging.Messaging
                 Content = string.Concat("Echo: ", message.Content),
                 Instant = DateTime.Now
             };
-            OnMessageReceived(echo);
+            OnMessageReceived(echo);*/
+
+            //appel la méthode send du webservice
+            ISessionManager sessionManager = currentSessionManager;
+            currentSessionManager.Send(message);
         }
 
         private void OnMessageReceived(Message messageData)
