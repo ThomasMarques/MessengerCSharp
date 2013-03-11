@@ -9,14 +9,9 @@ namespace Isima.InstantMessaging.Messaging
     {
         public event EventHandler<MessageEventArgs> MessageReceived;
 
-        private Session _session;
-
-        private ISessionService _service;
-
         public void Initialize()
         {
-            ServiceAgenda.ServiceAgendaClient service = new ServiceAgenda.ServiceAgendaClient();
-            string result = service.GetData(5);
+            
         }
 
         public void Send(Message message)
