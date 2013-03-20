@@ -18,7 +18,7 @@ namespace Isima.InstantMessaging.WcfService
         [DataMember]
         public String WindowsIdentityName { get; set; }
 
-        public bool Equals(Object o)
+        public bool Equals(Object o)  
         {
             bool ret = false;
             if (o.GetType().Equals(this.GetType()))

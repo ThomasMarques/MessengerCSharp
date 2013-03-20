@@ -16,6 +16,9 @@ namespace Isima.InstantMessaging.WcfService
         bool SendMessage(Message message);
 
         [OperationContract]
+        List<Message> GetMessage(string adresse);
+
+        [OperationContract]
         Session Register(DateTime current);
 
         [OperationContract]

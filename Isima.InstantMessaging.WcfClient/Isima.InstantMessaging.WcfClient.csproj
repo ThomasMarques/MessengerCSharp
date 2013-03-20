@@ -74,6 +74,9 @@
     <None Include="Service References\ContactServiceReference\Isima.InstantMessaging.WcfClient.ContactServiceReference.Contact.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\SessionServiceReference\Isima.InstantMessaging.WcfClient.SessionServiceReference.Message.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\SessionServiceReference\Isima.InstantMessaging.WcfClient.SessionServiceReference.Session.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

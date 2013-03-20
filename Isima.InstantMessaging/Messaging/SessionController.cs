@@ -8,6 +8,21 @@ namespace Isima.InstantMessaging.Messaging
 {
     public class SessionController
     {
+
+        public SessionController(string add)
+        {
+            myAddress = add;
+        }
+
+        public string MyAddress
+        {
+            get { return myAddress; }
+        }
+        private string myAddress;
+
+        private const int RECEIVE_SPAN = 10000;
+        private const int PING_SPAN = 3000;
+
         public event EventHandler<MessageEventArgs> MessageReceived;
 
         private ISessionManager currentSessionManager;
@@ -16,7 +31,9 @@ namespace Isima.InstantMessaging.Messaging
         {
             currentSessionManager = curentSessM;
             // Simulate the initialization of a session by waiting 5 seconds.
-            System.Threading.Thread.Sleep(10000);
+            currentSessionManager.Register();
+            StartReceive();
+            StartPing();
         }
 
         public void Send(Message message)
@@ -37,7 +54,25 @@ namespace Isima.InstantMessaging.Messaging
             currentSessionManager.Send(message);
         }
 
-        private void OnMessageReceived(Message messageData)
+        public void StartReceive()
+        {
+            ISessionManager sessionManager = currentSessionManager;
+
+            System.Timers.Timer aTimer = new System.Timers.Timer(RECEIVE_SPAN);
+            aTimer.Elapsed += new System.Timers.ElapsedEventHandler(currentSessionManager.Receive);
+            aTimer.Enabled = true;
+        }
+
+        public void StartPing()
+        {
+            ISessionManager sessionManager = currentSessionManager;
+
+            System.Timers.Timer aTimer = new System.Timers.Timer(PING_SPAN);
+            aTimer.Elapsed += new System.Timers.ElapsedEventHandler(currentSessionManager.Ping);
+            aTimer.Enabled = true;
+        }
+
+        public void OnMessageReceived(Message messageData)
         {
             if (MessageReceived != null)
             {
