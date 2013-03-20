@@ -14,7 +14,7 @@ namespace Isima.InstantMessaging.WindowsClient
 
         private MessagingContext()
         {
-            this.MessagingSessionController = new SessionController();
+            this.MessagingSessionController = new SessionController(SenderAddress);
             this.ContactsManager = new WcfClient.WcfContactsManager();
         }
 

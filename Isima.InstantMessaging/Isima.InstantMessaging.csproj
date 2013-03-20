@@ -50,6 +50,7 @@
     <Compile Include="Messaging\Session.cs" />
     <Compile Include="Messaging\SessionController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Session\ISessionManager.cs" />
     <Compile Include="Text\Base64Encoder.cs" />
     <Compile Include="Text\Sanitizer.cs" />
   </ItemGroup>

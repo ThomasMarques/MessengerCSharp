@@ -15,6 +15,7 @@ namespace Isima.InstantMessaging.WcfService
         private static TimeSpan expirationSpan = new TimeSpan(0, 1, 0);
 
         private IList<Session> _sessions = new List<Session>();
+        private IDictionary<string, List<Message>> _messages = new Dictionary<string, List<Message>>();
 
         public Session Register()
         {
@@ -99,6 +100,30 @@ namespace Isima.InstantMessaging.WcfService
             }
 
             return null;
+        }
+
+        public bool SendMessage(Message message)
+        {
+            bool ret = GetPresence(message.ReceiverAddress);
+
+            //enregistre le message dans la map
+            if (!_messages.Keys.Contains(message.ReceiverAddress))
+            {
+                _messages.Add(message.ReceiverAddress, new List<Message>());
+            }
+
+            _messages[message.ReceiverAddress].Add(message);
+
+            return ret;
+        }
+
+        public List<Message> GetMessage(string adresse)
+        {
+            List<Message> ret = new List<Message>(_messages[adresse]);
+
+            _messages[adresse].Clear();
+
+            return ret;
         }
     }
 }

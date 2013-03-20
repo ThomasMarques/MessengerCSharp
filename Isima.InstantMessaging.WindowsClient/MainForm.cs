@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Isima.InstantMessaging.WcfClient;
 
 namespace Isima.InstantMessaging.WindowsClient
 {
@@ -77,7 +78,8 @@ namespace Isima.InstantMessaging.WindowsClient
 
         private void bgwSessionInitializer_DoWork(object sender, DoWorkEventArgs e)
         {
-            MessagingContext.Current.MessagingSessionController.Initialize();
+            WcfSessionManager sessionManager = new WcfSessionManager();
+            MessagingContext.Current.MessagingSessionController.Initialize(sessionManager);
         }
 
         private void bgwSessionInitializer_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
