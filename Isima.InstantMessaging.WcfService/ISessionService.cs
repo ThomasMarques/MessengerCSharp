@@ -22,6 +22,12 @@ namespace Isima.InstantMessaging.WcfService
         Session Register(DateTime current);
 
         [OperationContract]
-        bool GetPresence(String windowsIdentityName);
+        Session Register(System.Guid identifiant);
+
+        [OperationContract]
+        Etat GetPresence(String windowsIdentityName);
+
+        [OperationContract]
+        Session setEtat(Etat etat);
     }
 }
