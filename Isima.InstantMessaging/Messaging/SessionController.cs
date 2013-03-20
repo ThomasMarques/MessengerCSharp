@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Isima.InstantMessaging.ServiceSession;
 
 namespace Isima.InstantMessaging.Messaging
 {
