@@ -9,10 +9,10 @@ namespace Isima.InstantMessaging.Messaging
     {
         public enum Etat
         {
-            Available,
+            Away,
             Buzy,
             Absent,
-            Offligne
+            Disconnect
         };
 
         public System.Guid Identifiant { get; set; }
