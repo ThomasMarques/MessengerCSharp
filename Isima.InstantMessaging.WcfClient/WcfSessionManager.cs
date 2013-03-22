@@ -16,7 +16,7 @@ namespace Isima.InstantMessaging.WcfClient
         {
             using (SessionServiceReference.SessionServiceClient service = new SessionServiceReference.SessionServiceClient())
             {
-                SessionServiceReference.Session session = service.Register(currentSession.Identifiant);
+                SessionServiceReference.Session session = service.ReRegister(currentSession.Identifiant);
 
                 //Attention il manque des attributs
                 currentSession.Expiration = session.Expiration;

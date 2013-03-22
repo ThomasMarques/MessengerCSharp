@@ -13,16 +13,16 @@ namespace Isima.InstantMessaging.WcfService
     public interface ISessionService
     {
         [OperationContract]
-        bool SendMessage(Message message);
+        void SendMessage(Message message);
 
         [OperationContract]
         List<Message> GetMessage(string adresse);
 
         [OperationContract]
-        Session Register(DateTime current);
+        Session Register();
 
         [OperationContract]
-        Session Register(System.Guid identifiant);
+        Session ReRegister(System.Guid identifiant);
 
         [OperationContract]
         Etat GetPresence(String windowsIdentityName);

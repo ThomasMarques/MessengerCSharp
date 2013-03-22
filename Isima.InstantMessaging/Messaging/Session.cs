@@ -40,5 +40,11 @@ namespace Isima.InstantMessaging.Messaging
         {
             return Identifiant.Equals(o.Identifiant);
         }
+
+        public override int GetHashCode() 
+        {
+            return (this as object).GetHashCode();
+        }
+
     }
 }

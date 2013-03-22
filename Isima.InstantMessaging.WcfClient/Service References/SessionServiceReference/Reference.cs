@@ -116,6 +116,9 @@ namespace Isima.InstantMessaging.WcfClient.SessionServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Isima.InstantMessaging.WcfClient.SessionServiceReference.Etat CurrentEtatField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime ExpirationField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -131,6 +134,19 @@ namespace Isima.InstantMessaging.WcfClient.SessionServiceReference {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Isima.InstantMessaging.WcfClient.SessionServiceReference.Etat CurrentEtat {
+            get {
+                return this.CurrentEtatField;
+            }
+            set {
+                if ((this.CurrentEtatField.Equals(value) != true)) {
+                    this.CurrentEtatField = value;
+                    this.RaisePropertyChanged("CurrentEtat");
+                }
             }
         }
         
@@ -183,21 +199,44 @@ namespace Isima.InstantMessaging.WcfClient.SessionServiceReference {
         }
     }
     
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Etat", Namespace="http://schemas.datacontract.org/2004/07/Isima.InstantMessaging.WcfService")]
+    public enum Etat : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Available = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Buzy = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Absent = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Offligne = 3,
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="SessionServiceReference.ISessionService")]
     public interface ISessionService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISessionService/SendMessage", ReplyAction="http://tempuri.org/ISessionService/SendMessageResponse")]
-        bool SendMessage(Isima.InstantMessaging.WcfClient.SessionServiceReference.Message message);
+        void SendMessage(Isima.InstantMessaging.WcfClient.SessionServiceReference.Message message);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISessionService/GetMessage", ReplyAction="http://tempuri.org/ISessionService/GetMessageResponse")]
         Isima.InstantMessaging.WcfClient.SessionServiceReference.Message[] GetMessage(string adresse);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISessionService/Register", ReplyAction="http://tempuri.org/ISessionService/RegisterResponse")]
-        Isima.InstantMessaging.WcfClient.SessionServiceReference.Session Register(System.DateTime current);
+        Isima.InstantMessaging.WcfClient.SessionServiceReference.Session Register();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISessionService/ReRegister", ReplyAction="http://tempuri.org/ISessionService/ReRegisterResponse")]
+        Isima.InstantMessaging.WcfClient.SessionServiceReference.Session ReRegister(System.Guid identifiant);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISessionService/GetPresence", ReplyAction="http://tempuri.org/ISessionService/GetPresenceResponse")]
-        bool GetPresence(string windowsIdentityName);
+        Isima.InstantMessaging.WcfClient.SessionServiceReference.Etat GetPresence(string windowsIdentityName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISessionService/setEtat", ReplyAction="http://tempuri.org/ISessionService/setEtatResponse")]
+        Isima.InstantMessaging.WcfClient.SessionServiceReference.Session setEtat(Isima.InstantMessaging.WcfClient.SessionServiceReference.Etat etat);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -227,20 +266,28 @@ namespace Isima.InstantMessaging.WcfClient.SessionServiceReference {
                 base(binding, remoteAddress) {
         }
         
-        public bool SendMessage(Isima.InstantMessaging.WcfClient.SessionServiceReference.Message message) {
-            return base.Channel.SendMessage(message);
+        public void SendMessage(Isima.InstantMessaging.WcfClient.SessionServiceReference.Message message) {
+            base.Channel.SendMessage(message);
         }
         
         public Isima.InstantMessaging.WcfClient.SessionServiceReference.Message[] GetMessage(string adresse) {
             return base.Channel.GetMessage(adresse);
         }
         
-        public Isima.InstantMessaging.WcfClient.SessionServiceReference.Session Register(System.DateTime current) {
-            return base.Channel.Register(current);
+        public Isima.InstantMessaging.WcfClient.SessionServiceReference.Session Register() {
+            return base.Channel.Register();
         }
         
-        public bool GetPresence(string windowsIdentityName) {
+        public Isima.InstantMessaging.WcfClient.SessionServiceReference.Session ReRegister(System.Guid identifiant) {
+            return base.Channel.ReRegister(identifiant);
+        }
+        
+        public Isima.InstantMessaging.WcfClient.SessionServiceReference.Etat GetPresence(string windowsIdentityName) {
             return base.Channel.GetPresence(windowsIdentityName);
+        }
+        
+        public Isima.InstantMessaging.WcfClient.SessionServiceReference.Session setEtat(Isima.InstantMessaging.WcfClient.SessionServiceReference.Etat etat) {
+            return base.Channel.setEtat(etat);
         }
     }
 }

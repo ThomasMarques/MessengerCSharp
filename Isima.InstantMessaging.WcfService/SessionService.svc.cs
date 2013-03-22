@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 
+
 namespace Isima.InstantMessaging.WcfService
 {
     // REMARQUE : vous pouvez utiliser la commande Renommer du menu Refactoriser pour changer le nom de classe "SessionService" à la fois dans le code, le fichier svc et le fichier de configuration.
@@ -14,8 +15,8 @@ namespace Isima.InstantMessaging.WcfService
 
         private static TimeSpan expirationSpan = new TimeSpan(0, 1, 0);
 
-        private IList<Session> _sessions = new List<Session>();
-        private IDictionary<string, List<Message>> _messages = new Dictionary<string, List<Message>>();
+        private static IList<Session> _sessions = new List<Session>();
+        private static IDictionary<string, List<Message>> _messages = new Dictionary<string, List<Message>>();
 
         public Session Register()
         {
@@ -38,7 +39,7 @@ namespace Isima.InstantMessaging.WcfService
             return session;
         }
 
-        public Session Register(System.Guid identifiant)
+        public Session ReRegister(System.Guid identifiant)
         {
             String name = "public";
             Session ret = null;
@@ -52,7 +53,17 @@ namespace Isima.InstantMessaging.WcfService
             Session session = new Session();
             session.Identifiant = identifiant;
 
-            int index = _sessions.IndexOf(session);
+            //int index = _sessions.IndexOf(session);
+            int index = -1;
+            int i = 0;
+            foreach (Session s in _sessions)
+            {
+                if (s.Identifiant.Equals(identifiant))
+                {
+                    index = i;
+                }
+                else i++;
+            }
 
             if (index != -1)
             {
@@ -102,9 +113,9 @@ namespace Isima.InstantMessaging.WcfService
             return null;
         }
 
-        public bool SendMessage(Message message)
+        public void SendMessage(Message message)
         {
-            bool ret = GetPresence(message.ReceiverAddress);
+            Etat ret = GetPresence(message.ReceiverAddress);
 
             //enregistre le message dans la map
             if (!_messages.Keys.Contains(message.ReceiverAddress))
@@ -113,8 +124,6 @@ namespace Isima.InstantMessaging.WcfService
             }
 
             _messages[message.ReceiverAddress].Add(message);
-
-            return ret;
         }
 
         public List<Message> GetMessage(string adresse)
@@ -125,5 +134,6 @@ namespace Isima.InstantMessaging.WcfService
 
             return ret;
         }
+
     }
 }
